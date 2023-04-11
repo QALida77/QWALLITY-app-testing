@@ -1,0 +1,645 @@
+{
+	"info": {
+		"_postman_id": "ff72921f-12dd-4ccc-906f-8f9a3134b077",
+		"name": "API Qwallity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26689643"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Admin register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"APIAdmin\",\r\n  \"email\": \"APIAdmin\",\r\n  \"username\": \"APIAdmin\",\r\n  \"password\": \"APIAdmin\",\r\n  \"role_id\": 1,\r\n  \"account\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login/token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var res = JSON.parse(responseBody);\r",
+									"{\r",
+									"pm.environment.set(\"token_admin\", res.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "APILida",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "APILida",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/login/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Course",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var res = JSON.parse(responseBody);\r",
+									"{\r",
+									"pm.environment.set(\"course_id\", res.id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"API course\",\r\n  \"body\": \"API course\",\r\n  \"coursetype\": \"1\",\r\n  \"author\": \"APIAdmin\",\r\n  \"price\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/add_course/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"add_course",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"updated\",\r\n  \"body\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/course/{{course_id}}/update/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course",
+								"{{course_id}}",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete course",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/course/{{course_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"course",
+								"{{course_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Non admin",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var res = JSON.parse(responseBody);\r",
+									"{\r",
+									"pm.environment.set(\"id\", res.user_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"Lida\",\r\n  \"email\": \"lidaaapi@gmail.com\",\r\n  \"username\": \"APILidaa\",\r\n  \"password\": \"APILidaa\",\r\n  \"role_id\": 2,\r\n  \"account\": 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login/token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var res = JSON.parse(responseBody);\r",
+									"{\r",
+									"pm.environment.set(\"token\", res.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "APILida",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "APILida",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/login/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get advanced courses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/advanced/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"advanced",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get fundamental courses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/courses/fundamental/api",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"fundamental",
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get account balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/balance/balance_api/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"balance",
+								"balance_api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy course",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/buy_course/api/{{course_id}}/APILidaa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buy_course",
+								"api",
+								"{{course_id}}",
+								"APILidaa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user courses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"maxRedirects": 100
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/usercourses/api/1113235625",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"usercourses",
+								"api",
+								"1113235625"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get course price",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/course_price/api/{{course_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"course_price",
+								"api",
+								"{{course_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/get_user_role/APILidaa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"get_user_role",
+								"APILidaa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
